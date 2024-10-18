@@ -246,9 +246,9 @@ def get_text_messages(message):
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Российский космос"
-    elif message.text in menu.russian_space_sub:
+    elif message.text in russian_space_sub:
         markup = types.InlineKeyboardMarkup()
-        final_message = menu.russian_space_sub[message.text], reply_markup=markup, parse_mode='Markdown'
+        final_message = russian_space_sub[message.text], reply_markup=markup, parse_mode='Markdown'
 
 # Новости
     elif message.text == '📰 Новости':
@@ -264,9 +264,9 @@ def get_text_messages(message):
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Проекты и мероприятия"
-    elif message.text in menu.projects_sub:
+    elif message.text in projects_sub:
         markup = types.InlineKeyboardMarkup()
-        final_message = menu.projects_sub[message.text], reply_markup=markup, parse_mode='Markdown'
+        final_message = projects_sub[message.text], reply_markup=markup, parse_mode='Markdown'
 
 # Меню "Знания"
     elif message.text == '📚 Знания':
@@ -275,9 +275,9 @@ def get_text_messages(message):
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Знания и мероприятия"
-    elif message.text in menu.knowledge_sub:
+    elif message.text in knowledge_sub:
         markup = types.InlineKeyboardMarkup()
-        final_message = menu.knowledge_sub[message.text], reply_markup=markup, parse_mode='Markdown'
+        final_message = knowledge_sub[message.text], reply_markup=markup, parse_mode='Markdown'
 
 # Меню "Навигация профессий"
     elif message.text == '💻 Навигация профессий':
@@ -286,9 +286,9 @@ def get_text_messages(message):
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Навигация профессий"
-    elif message.text in menu.profession_sub:
+    elif message.text in profession_sub:
         markup = types.InlineKeyboardMarkup()
-        final_message = menu.profession_sub[message.text], reply_markup=markup, parse_mode='Markdown'
+        final_message = profession_sub[message.text], reply_markup=markup, parse_mode='Markdown'
    
 # Меню "Учителю"
     elif message.text == '👩🏻‍🏫 Учителю':
@@ -297,9 +297,9 @@ def get_text_messages(message):
             bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Учителю"
-    elif message.text in menu.teacher_sub:
+    elif message.text in teacher_sub:
         markup = types.InlineKeyboardMarkup()
-        final_message = menu.teacher_sub[message.text], reply_markup=markup, parse_mode='Markdown'
+        final_message = teacher_sub[message.text], reply_markup=markup, parse_mode='Markdown'
 
 # Меню "Медиа"
     elif message.text == '🎬 Медиа':
