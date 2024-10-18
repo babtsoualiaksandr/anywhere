@@ -36,7 +36,7 @@ def update_server(request):
         return Response({'100':100}, status=status.HTTP_100_CONTINUE)
 
     elif request.method == 'POST':
-        repo = git.Repo('path/to/git_repo')
+        repo = git.Repo('mysite')
         origin = repo.remotes.origin
         origin.pull()
         return Response({"200":200}, status=status.HTTP_200_OK )
