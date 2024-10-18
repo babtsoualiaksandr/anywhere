@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 
-from bot import bot
+from sktbot import bot
 from bot.serializers import GroupSerializer, UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
