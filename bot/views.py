@@ -41,5 +41,4 @@ def update_server(request):
         repo = git.Repo('mysite')
         origin = repo.remotes.origin
         origin.pull()
-        return Response({"200":200}, status=status.HTTP_200_OK )
-
+        return Response({"result server update": "very nice"}, status=status.HTTP_200_OK )
