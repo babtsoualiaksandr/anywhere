@@ -2,11 +2,172 @@ import telebot
 from telebot import types
 import random
 from random import choice
-import menu
 import os
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-bot = telebot.TeleBot(BOT_TOKEN)
+print(BOT_TOKEN)
+bot_tlg = telebot.TeleBot(BOT_TOKEN)
+
+'''Подмодуль, содержащий все пункты меню и подменю, а так же выдачу сообщений, для малых пунктов. Все объекты представлены в виде словарей ключ-значение.'''
+
+main_button = 'Главное меню' # Кнопка возврата в главное меню
+
+# Главное меню
+main_menu = {
+        "btn1": '🇷🇺 Российский космос',
+        "btn2": '📰 Новости',
+        "btn3": '📁 Проекты и мероприятия',
+        "btn4": '📚 Знания',
+        "btn5": '💻 Навигация профессий',
+        "btn6": '👩🏻‍🏫 Учителю',
+        "btn7": '🎬 Медиа',
+        "btn8": '🔎 Поиск',
+        "btn9": '👀 Ты этого точно не знал!',
+        "btn10": '🔙 Вернуться к выбору языка'
+}
+
+# Российский космос
+russian_space = {
+        "btn1": '📚 История',
+        "btn2": '💻 Техника',
+        "btn3": '🚀 Космодромы',
+        "btn4": '👨‍🚀 Космонавты',
+        "btn5": '👍🏻 Следуй за космонавтом',
+        "btn6": '🔙 Главное меню'
+}
+
+russian_space_sub = {
+        '📚 История': 'Твой раздел: 📚 История\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/140/)', 
+        '💻 Техника': 'Твой раздел: 💻 Техника\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/138/)', 
+        '🚀 Космодромы': 'Твой раздел: 🚀 Космодромы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/139/)', 
+        '👨‍🚀 Космонавты': 'Твой раздел: 👨‍🚀 Космонавты\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/40/)', 
+        '👍🏻 Следуй за космонавтом': 'Твой раздел: 👍🏻 Следуй за космонавтом\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/131/)'
+}
+
+# Проекты и мероприятия
+projects = {
+        "btn1": '🔎 Кванториум',
+        "btn2": '🔎 Сириус',
+        "btn3": '🔎 Университетская гимназия МГУ',
+        "btn4": '🔎 Центр космонавтика и авиация',
+        "btn5": '🔎 Космический класс',
+        "btn6": '🔎 Космические смены',
+        "btn7": '🔎 Программа "Универсат"',
+        "btn8": '🔎 Cansat Russia',
+        "btn9": '🔎 Проект космический урок',
+        "btn10": '🔎 World skills Russia',
+        "btn11": '🔎 Билет в будующее',
+        "btn12": '🔎 ПроеКТОриЯ',
+        "btn13": '🔎 Форумная кампания',
+        "btn14": '🔎 Космофест Восточный',
+        "btn15": '🔎 КосмоСтарт',
+        "btn16": '🔎 Олимпиада НТИ',
+        "btn17": '🔎 Дежурный по планете',
+        "btn18": '🔎 Космический рейс',
+        "btn19": '🔎 Nauka 0+',
+        "btn20": '🔎 Профстажировка.рф 2.0',
+        "btn21": '🔎 Неделя без турникетов',
+        "btn22": '🔎 Космос',
+        "btn23": '🔎 Самбо в школу',
+        "btn24": '🔎 Лунная одиссея',
+        "btn25": '🔎 Большая перемена'
+}
+projects_sub = {
+        '🔎 Кванториум': 'Твой раздел: 🔎 Кванториум\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/473/)',
+        '🔎 Сириус': 'Твой раздел: 🔎 Сириус\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/474/)',
+        '🔎 Университетская гимназия МГУ': 'Твой раздел: 🔎 Университетская гимназия МГУ\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/475/)',
+        '🔎 Центр космонавтика и авиация': 'Твой раздел: 🔎 Университетская гимназия МГУ\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/117/)',
+        '🔎 Космический класс': 'Твой раздел: 🔎 Космический класс\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/477/)',
+        '🔎 Космические смены': 'Твой раздел: 🔎 Космические смены\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/478/)',
+        '🔎 Программа "Универсат"': 'Твой раздел: 🔎 Программа "Универсат"\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/482/)',
+        '🔎 Cansat Russia': 'Твой раздел: 🔎 Cansat Russia\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/479/)',
+        '🔎 Проект космический урок': 'Твой раздел: 🔎 Проект космический урок\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/490/)',
+        '🔎 World skills Russia': 'Твой раздел: 🔎 World skills Russia\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/476/)',
+        '🔎 Билет в будующее': 'Твой раздел: 🔎 Билет в будующее\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/486/)',
+        '🔎 ПроеКТОриЯ': 'Твой раздел: 🔎 ПроеКТОриЯ\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/480/)',
+        '🔎 Форумная кампания': 'Твой раздел: 🔎 Форумная кампания\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/487/)',
+        '🔎 Космофест Восточный': 'Твой раздел: 🔎 Космофест Восточный\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/483/)',
+        '🔎 КосмоСтарт': 'Твой раздел: 🔎 КосмоСтарт\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/484/)',
+        '🔎 Олимпиада НТИ': 'Твой раздел: 🔎 Олимпиада НТИ\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/485/)',
+        '🔎 Дежурный по планете': 'Твой раздел: 🔎 Дежурный по планете\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/488/)',
+        '🔎 Nauka 0+': 'Твой раздел: 🔎 Nauka 0+\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/576/)',
+        '🔎 Профстажировка.рф 2.0': 'Твой раздел: 🔎 Профстажировка.рф 2.0\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/481/)',
+        '🔎 Неделя без турникетов': 'Твой раздел: 🔎 Неделя без турникетов\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/573/)',
+        '🔎 Космос': 'Твой раздел: 🔎 Космос\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/489/)',
+        '🔎 Самбо в школу': 'Твой раздел: 🔎 Самбо в школу\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/491/)',
+        '🔎 Лунная одиссея': 'Твой раздел: 🔎 Лунная одиссея\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/1186/)',
+        '🔎 Большая перемена': 'Твой раздел: 🔎 Большая перемена\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' ссылке(https://space4kids.ru/1714/)'
+}
+
+# Знания
+knowledge = {
+        "btn1": '📚 Лекции',
+        "btn2": '📚 Книги',
+        "btn3": '📚 Документальные фильмы',
+        "btn4": '📚 Телепередачи',
+        "btn5": '📚 Художественные фильмы',
+        "btn6": '📚 Мультфильмы',
+        "btn7": '📚 Доступно о космосе',
+        "btn8": '📚 Журналы'
+}
+
+knowledge_sub = {
+        '📚 Лекции': 'Твой раздел: 📚 Лекции\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/118/)',
+        '📚 Книги': 'Твой раздел: 📚 Книги\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/127/)',
+        '📚 Документальные фильмы': 'Твой раздел: 📚 Документальные фильмы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/126/)',
+        '📚 Телепередачи': 'Твой раздел: 📚 Телепередачи\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/128/)',
+        '📚 Художественные фильмы': 'Твой раздел: 📚 Художественные фильмы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/656/)',
+        '📚 Мультфильмы': 'Твой раздел: 📚 Мультфильмы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/1753/)',
+        '📚 Доступно о космосе': 'Твой раздел: 📚 Доступно о космосе\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/125/)',
+        '📚 Журналы': 'Твой раздел: 📚 Журналы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/980/)'
+}
+
+# Навигация профессий
+profession = {
+        "btn1": "🛠 Каталог профессий",
+        "btn2": '🛠 Образовательные организации',
+        "btn3": '🛠 Организации госкорпарации "Роскосмос"',
+        "btn4": '🛠 Профориентационное тестирование'
+}
+
+profession_sub = {
+        '🛠 Каталог профессий': 'Твой раздел: 🛠 Каталог профессий\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/108/)', 
+        '🛠 Образовательные организации': 'Твой раздел: 🛠 Образовательные организации\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/110/)', 
+        '🛠 Организации госкорпарации "Роскосмос"': 'Твой раздел: 🛠 Организации госкорпарации "Роскосмос"\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/950/)', 
+        '🛠 Профориентационное тестирование': 'Твой раздел: 🛠 Профориентационное тестирование\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/112/)'
+}
+
+# Учителю
+teacher = {
+        "btn1": '📚 Концепция программ "Космический класс"',
+        "btn2": '📚 Методические материалы',
+        "btn3": '📚 Музеи и центры просвещения',
+        "btn4": '📚 Олимпиады и конкурсы',
+        "btn5": '📚 Проектная деятельность',
+        "btn6": '📚 Уроки и эксперименты',
+        "btn7": '📚 Плакаты и постеры'
+}
+
+teacher_sub = {
+        '📚 Концепция программ "Космический класс"': 'Твой раздел: 📚 Концепция программ "Космический класс"\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/120/)', 
+        '📚 Методические материалы': 'Твой раздел: 📚 Методические материалы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/121/)', 
+        '📚 Музеи и центры просвещения': 'Твой раздел: 📚 Музеи и центры просвещения\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/122/)', 
+        '📚 Олимпиады и конкурсы': 'Твой раздел: 📚 Олимпиады и конкурсы\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/124/)', 
+        '📚 Проектная деятельность': 'Твой раздел: 📚 Проектная деятельность\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/880/)', 
+        '📚 Уроки и эксперименты': 'Твой раздел: 📚 Уроки и эксперименты\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/881/)', 
+        '📚 Плакаты и постеры': 'Твой раздел: 📚 Плакаты и постеры\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/1707/)'
+}
+
+# Медиа
+media = {
+        "btn1": '📷 Фото',
+        "btn2": '📷 Видео',
+        "btn3": '📷 Интерактив'
+}
+
+media_sub = {
+
+}
 
 spacefacts = ['Солнце в 300 000 раз больше, чем наша планета Земля', 'Солнце полностью проворачивается вокруг своей оси за 25-35 дней', 'Земля, Марс, Меркурий и Венера также называются «внутренними планетами», так как расположены ближе всего к Солнцу',
 'Солнце теряет до 1 000 000 тонн своей массы каждую секунду из-за солнечного ветра', 'Меркурий и Венера уникальны тем, что у них отсутствуют какие-либо спутники', 'На Меркурии нет атмосферы, а значит ветра или какой-либо другой погоды',
@@ -37,27 +198,27 @@ spacefacts = ['Солнце в 300 000 раз больше, чем наша пл
 'Следы лунной посадки, вероятно, все еще будут видны через миллионы лет']
 
 
-@bot.message_handler(commands=['start']) #стартовая команда
+@bot_tlg.message_handler(commands=['start']) #стартовая команда
 def start(message):
 # Стартовое меню, выбор языка
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("🇷🇺 Русский")
     btn2 = types.KeyboardButton('🇬🇧 English')
     markup.add(btn1, btn2)
-    send_message = (f'<b>Привет {message.from_user.first_name} {message.from_user.last_name} 🇷🇺 Выберите язык / 🇬🇧 Choose your language')
-    bot.send_message(message.chat.id, send_message, parse_mode='html', reply_markup=markup)
+    send_message = (f'<b>Привет {message.from_user.first_name} {message.from_user.last_name} 🇷🇺 Выберите язык / 🇬🇧 Choose your language</b>')
+    bot_tlg.send_message(message.chat.id, send_message, parse_mode='html', reply_markup=markup)
 
-@bot.message_handler(content_types=['text'])
+@bot_tlg.message_handler(content_types=['text'])
 def get_text_messages(message):
     final_message = "" # Переменная для финального сообщения после обработки
-    # get_message_bot = message.text.strip().lower() # Считывает ввод в нижнем регистре
+    # get_message_bot_tlg = message.text.strip().lower() # Считывает ввод в нижнем регистре
 
 # Стартовое меню для RU
     if message.text == '🇷🇺 Русский':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width = 3)
         markup.add(*main_menu.values())
-        bot.send_message(message.from_user.id, "👋 Вас приветствует бот для сайта Space4Kids", reply_markup=markup)
-        bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
+        bot_tlg.send_message(message.from_user.id, "👋 Вас приветствует бот для сайта Space4Kids", reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
 # Возврат к выбору языка
     elif message.text == '🔙 Вернуться к выбору языка':
@@ -65,24 +226,24 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton("🇷🇺 Русский")
         btn2 = types.KeyboardButton('🇬🇧 English')
         markup.add(btn1, btn2)
-        bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
 # Переход в главное меню
     elif message.text == '🔙 Главное меню':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width = 3)
         markup.add(*main_menu.values())
-        bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
+        bot_tlg.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
 # Случайные факты
     elif message.text == '👀 Ты этого точно не знал!':
         for _i in range(10):
-            bot.send_message(message.from_user.id, random.choice(spacefacts))
+            bot_tlg.send_message(message.from_user.id, random.choice(spacefacts))
 
 # Меню "Российский космос"
     elif message.text == '🇷🇺 Российский космос':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(*menu.russian_space.values(), main_button)
-        bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Российский космос"
     elif message.text in menu.russian_space_sub:
@@ -94,13 +255,13 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Твой раздел: 📰 Новости\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/101/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Твой раздел: 📰 Новости\n \n👍🏻 Хороший выбор\n \n📲 Перейти к разделу можно по' + ' [ссылке](https://space4kids.ru/101/)', reply_markup=markup, parse_mode='Markdown')
 
 # Меню "Проекты и мероприятия"
     elif message.text == '📁 Проекты и мероприятия':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(*menu.projects.values(), main_button)
-        bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Проекты и мероприятия"
     elif message.text in menu.projects_sub:
@@ -111,7 +272,7 @@ def get_text_messages(message):
     elif message.text == '📚 Знания':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(*menu.knowledge.values(), main_button)
-        bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Знания и мероприятия"
     elif message.text in menu.knowledge_sub:
@@ -122,7 +283,7 @@ def get_text_messages(message):
     elif message.text == '💻 Навигация профессий':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(*menu.profession.values(), main_button)
-        bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Навигация профессий"
     elif message.text in menu.profession_sub:
@@ -133,7 +294,7 @@ def get_text_messages(message):
     elif message.text == '👩🏻‍🏫 Учителю':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.add(*menu.teacher.values(), main_button)
-            bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+            bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Учителю"
     elif message.text in menu.teacher_sub:
@@ -144,24 +305,24 @@ def get_text_messages(message):
     elif message.text == '🎬 Медиа':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.add(*menu.media.values(), main_button)
-            bot.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
+            bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
     #🔎 Поиск
     elif message.text == '🔎 Поиск':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, '📲 Чтобы перейти к поиску перейди по [ссылке](https://space4kids.ru/search/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, '📲 Чтобы перейти к поиску перейди по [ссылке](https://space4kids.ru/search/)', reply_markup=markup, parse_mode='Markdown')
 
     #Small talk
     elif message.text.lower() == 'привет!' or message.text.lower() == 'привет':
-        bot.send_message(message.from_user.id, 'Привет!')
+        bot_tlg.send_message(message.from_user.id, 'Привет!')
 
     elif message.text.lower() == 'что делаешь?':
-        bot.send_message(message.from_user.id, 'Помогаю людям!')
+        bot_tlg.send_message(message.from_user.id, 'Помогаю людям!')
 
     elif message.text.lower() == 'как дела?' or message.text.lower() == 'как дела':
-        bot.send_message(message.from_user.id, 'Хорошо!')
+        bot_tlg.send_message(message.from_user.id, 'Хорошо!')
     
     
     #English Language
@@ -176,21 +337,21 @@ def get_text_messages(message):
         btn7 = types.KeyboardButton('🎬 Media content')
         btn8 = types.KeyboardButton('🔙 Back to language selection')
         markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8)
-        bot.send_message(message.from_user.id, '👋 You are welcomed by the bot for the Space4Kids website', reply_markup=markup)
-        bot.send_message(message.from_user.id, '👀 Select the section you are interested in')
+        bot_tlg.send_message(message.from_user.id, '👋 You are welcomed by the bot_tlg for the Space4Kids website', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '👀 Select the section you are interested in')
 
     elif message.text == '🔙 Back to language selection':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🇷🇺 Русский")
         btn2 = types.KeyboardButton('🇬🇧 English')
         markup.add(btn1, btn2)
-        bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
     elif message.text == '🇷🇺 Russian space':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 🇷🇺 Russian space\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/102/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 🇷🇺 Russian space\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/102/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '🔙 Main menu':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -204,52 +365,52 @@ def get_text_messages(message):
         btn8 = types.KeyboardButton('🔎 Search')
         btn8 = types.KeyboardButton('🔙 Back to language selection')
         markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8)
-        bot.send_message(message.from_user.id, '👀 Select the section you are interested in', reply_markup=markup)
+        bot_tlg.send_message(message.from_user.id, '👀 Select the section you are interested in', reply_markup=markup)
 
     elif message.text == '📰 News':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 📰 News\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/101/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 📰 News\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/101/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '📁 Projects and activities':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 📁 Projects and activities\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/103/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 📁 Projects and activities\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/103/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '📚 Knowledge':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 📚 Knowledge\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/104/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 📚 Knowledge\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/104/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '💻 Navigation of jobs':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 💻 Navigation of jobs\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/105/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 💻 Navigation of jobs\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/105/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '👩🏻‍🏫 For teachears':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 👩🏻‍🏫 For teachears\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/106/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 👩🏻‍🏫 For teachears\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/106/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '🎬 Media content':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Your section: 🎬 Media content\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/107/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, 'Your section: 🎬 Media content\n \n👍🏻 What a good choice!\n \n📲 You can go to the section by following the' + ' [link](https://space4kids.ru/107/)', reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '🔎 Search':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Main menu')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, '📲 To go to the search, follow the ' + '[link](https://space4kids.ru/search/)', reply_markup=markup, parse_mode='Markdown')
+        bot_tlg.send_message(message.from_user.id, '📲 To go to the search, follow the ' + '[link](https://space4kids.ru/search/)', reply_markup=markup, parse_mode='Markdown')
 
 # Отправка final_message
-    bot.send_message(message.chat.id, final_message, parse_mode='html', reply_markup=markup)    
+    bot_tlg.send_message(message.chat.id, final_message, parse_mode='html', reply_markup=markup)    
 
 if __name__ == "__main__":
-    bot.polling(none_stop=True)
+    bot_tlg.polling(none_stop=True)

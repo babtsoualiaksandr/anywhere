@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 
-from sktbot import bot
+from bot.sktbot import bot_tlg
 from bot.serializers import GroupSerializer, UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -36,7 +36,7 @@ def update_server(request):
     List all code snippets, or create a new snippet.
     """
     if request.method == 'GET':
-        bot.polling(none_stop=True)
+        bot_tlg.polling(none_stop=True)
         return Response({'100':100}, status=status.HTTP_100_CONTINUE)
 
     elif request.method == 'POST':
