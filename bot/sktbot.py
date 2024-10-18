@@ -242,7 +242,7 @@ def get_text_messages(message):
 # Меню "Российский космос"
     elif message.text == '🇷🇺 Российский космос':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(*menu.russian_space.values(), main_button)
+        markup.add(*russian_space.values(), main_button)
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Российский космос"
@@ -260,7 +260,7 @@ def get_text_messages(message):
 # Меню "Проекты и мероприятия"
     elif message.text == '📁 Проекты и мероприятия':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(*menu.projects.values(), main_button)
+        markup.add(*projects.values(), main_button)
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Проекты и мероприятия"
@@ -271,7 +271,7 @@ def get_text_messages(message):
 # Меню "Знания"
     elif message.text == '📚 Знания':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(*menu.knowledge.values(), main_button)
+        markup.add(*knowledge.values(), main_button)
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Знания и мероприятия"
@@ -282,7 +282,7 @@ def get_text_messages(message):
 # Меню "Навигация профессий"
     elif message.text == '💻 Навигация профессий':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(*menu.profession.values(), main_button)
+        markup.add(*profession.values(), main_button)
         bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Навигация профессий"
@@ -293,7 +293,7 @@ def get_text_messages(message):
 # Меню "Учителю"
     elif message.text == '👩🏻‍🏫 Учителю':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            markup.add(*menu.teacher.values(), main_button)
+            markup.add(*teacher.values(), main_button)
             bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
 # Подменю "Учителю"
@@ -304,7 +304,7 @@ def get_text_messages(message):
 # Меню "Медиа"
     elif message.text == '🎬 Медиа':
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            markup.add(*menu.media.values(), main_button)
+            markup.add(*media.values(), main_button)
             bot_tlg.send_message(message.from_user.id, '⬇ Выберите подраздел', reply_markup=markup)
 
     #🔎 Поиск
